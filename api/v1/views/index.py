@@ -22,9 +22,3 @@ def stats():
     """ data stats """
     stats = dict([(val, storage.count(cls)) for cls, val in classes.items()])
     return jsonify(stats)
-
-
-@app_views.errorhandler(404)
-def page_not_found(e):
-    """handler for 404 errors"""
-    return jsonify({"error": "Not found"}), 404
