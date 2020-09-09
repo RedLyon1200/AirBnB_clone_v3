@@ -15,7 +15,8 @@ HBNB_API_HOST = getenv('HBNB_API_HOST', default="0.0.0.0")
 HBNB_API_PORT = getenv('HBNB_API_PORT', default=5000)
 
 
-conf = {'host': HBNB_API_HOST, 'port': HBNB_API_PORT, 'threaded': True}
+conf = {'host': HBNB_API_HOST,
+        'port': HBNB_API_PORT, 'threaded': True, 'debug': True}
 
 
 @app.errorhandler(404)
