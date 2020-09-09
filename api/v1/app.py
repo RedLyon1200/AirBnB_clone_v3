@@ -2,7 +2,7 @@
 """
 """
 from api.v1.views import app_views
-from flask import Flask
+from flask import Flask, jsonify
 from models import storage
 from os import getenv
 
@@ -16,6 +16,12 @@ HBNB_API_PORT = getenv('HBNB_API_PORT', default=5000)
 
 
 conf = {'host': HBNB_API_HOST, 'port': HBNB_API_PORT, 'threaded': True}
+
+
+@app.errorhandler(404)
+def page_not_found(e):
+    """handler for 404 errors"""
+    return jsonify({"error": "Not found"}), 404
 
 
 @app.teardown_appcontext
