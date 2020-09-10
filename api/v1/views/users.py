@@ -81,5 +81,5 @@ def put_user(user_id):
         if key not in ignore_data:
             setattr(user, key, val)
 
-    storage.save()
+    user.save()
     return jsonify(user.to_dict()), 200
