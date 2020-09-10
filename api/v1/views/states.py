@@ -7,9 +7,11 @@ from api.v1.views import app_views
 from models import storage
 from models.state import State
 
+opt_route = {'strict_slashes': False}
 
-@app_views.route('/states/<state_id>', methods=['GET'])
-@app_views.route('/states', methods=['GET'])
+
+@app_views.route('/states/<state_id>', methods=['GET'], **opt_route)
+@app_views.route('/states', methods=['GET'], **opt_route)
 def get_states(state_id=None):
     """ Retrieves the list of all State objects or a specific State by id """
 
@@ -26,7 +28,7 @@ def get_states(state_id=None):
     return jsonify(states)
 
 
-@app_views.route('/states/<state_id>', methods=['DELETE'])
+@app_views.route('/states/<state_id>', methods=['DELETE'], **opt_route)
 def delete_state(state_id):
     """  """
     state = storage.get(State, state_id)
@@ -40,7 +42,7 @@ def delete_state(state_id):
     return {}, 200
 
 
-@app_views.route('/states', methods=['POST'])
+@app_views.route('/states', methods=['POST'], **opt_route)
 def create_state():
     """ Creates a State """
     try:
@@ -56,7 +58,7 @@ def create_state():
     return jsonify(new_state.to_dict()), 201
 
 
-@app_views.route('/states/<state_id>', methods=['PUT'])
+@app_views.route('/states/<state_id>', methods=['PUT'], **opt_route)
 def put_state(state_id):
     """ updates state """
     state = storage.get(State, state_id)
