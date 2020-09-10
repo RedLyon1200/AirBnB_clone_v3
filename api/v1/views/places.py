@@ -72,7 +72,7 @@ def create_place(city_id):
 
     user = storage.get(User, data.get('user_id'))
     if not user:
-        abort(404)    
+        abort(404)
 
     if not data.get('name'):
         return make_response('Missing name', 400)
