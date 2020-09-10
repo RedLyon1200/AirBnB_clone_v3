@@ -7,6 +7,7 @@ from flask import jsonify, abort, request, make_response
 from api.v1.views import app_views
 from models import storage
 from models import Place
+from models import User
 from models.city import City
 from models.state import State
 
