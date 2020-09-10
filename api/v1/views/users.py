@@ -12,7 +12,7 @@ opt_route = {'strict_slashes': False}
 
 @app_views.route('/users/<user_id>', methods=['GET'], **opt_route)
 @app_views.route('/users', methods=['GET'], **opt_route)
-def get_states(user_id=None):
+def get_users(user_id=None):
     """ Retrieves the list of all User objects or a specific User by id """
 
     if user_id:
@@ -52,6 +52,10 @@ def create_user():
 
     if not data.get('name'):
         return make_response('Missing name', 400)
+    elif not data.get('email'):
+        return make_response('Missing email', 400)
+    elif not data.get('password'):
+        return make_response('Missing password', 400)
 
     new_user = User(**data)
     new_user.save()
@@ -59,7 +63,7 @@ def create_user():
 
 
 @app_views.route('/users/<user_id>', methods=['PUT'], **opt_route)
-def put_state(user_id):
+def put_user(user_id):
     """ updates user """
     user = storage.get(User, user_id)
 
@@ -72,7 +76,7 @@ def put_state(user_id):
         return make_response('Not a JSON', 400)
 
     for key, val in data.items():
-        ignore_data = ['id', 'created_at', 'updated_at']
+        ignore_data = ['id', 'created_at', 'updated_at', 'email']
 
         if key not in ignore_data:
             setattr(user, key, val)
