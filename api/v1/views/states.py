@@ -2,12 +2,10 @@
 """
 """
 
-from flask import jsonify, abort, request
+from flask import jsonify, abort, request, make_response
 from api.v1.views import app_views
 from models import storage
 from models.state import State
-
-
 
 
 @app_views.route('/states/<state_id>', methods=['GET'])
@@ -48,10 +46,10 @@ def create_state():
     try:
         data = request.get_json()
     except Exception:
-        abort(400, description='Not a JSON')
+        return make_response(jsonify({'error': 'Not a JSON'}))
 
     if not data.get('name'):
-        abort(400, description='Missing name')
+        return make_response(jsonify({'error': 'Missing name'}))
 
     new_state = State(**data)
     new_state.save()
