@@ -22,7 +22,7 @@ def get_states(state_id=None):
             abort(404)
         return jsonify(state.to_dict())
 
-    states_obj = storage.all(State).values()
+    states_obj = storage.all('State').values()
     states = [obj.to_dict() for obj in states_obj]
 
     return jsonify(states)
