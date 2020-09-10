@@ -58,14 +58,15 @@ def create_city(state_id):
     if not state:
         abort(404)
 
-    try:
-        data = request.get_json()
-        data['state_id'] = state_id
-    except Exception:
-        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    data = request.get_json()
+
+    if not data:
+        return make_response('Not a JSON', 400)
+
+    data['state_id'] = state_id
 
     if not data.get('name'):
-        return make_response(jsonify({'error': 'Missing name'}), 400)
+        return make_response('Missing name', 400)
 
     new_city = City(**data)
     new_city.save()
@@ -80,10 +81,10 @@ def put_city(city_id):
     if not city:
         abort(404)
 
-    try:
-        data = request.get_json()
-    except Exception:
-        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    data = request.get_json()
+
+    if not data:
+        return make_response('Not a JSON', 400)
 
     for key, val in data.items():
         ignore_data = ['id', 'created_at', 'updated_at']
