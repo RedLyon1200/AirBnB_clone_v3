@@ -48,10 +48,10 @@ def create_state():
     try:
         data = request.get_json()
     except Exception:
-        return make_response(jsonify({'error': 'Not a JSON'})), 400
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
     if not data.get('name'):
-        return make_response(jsonify({'error': 'Missing name'})), 400
+        return make_response(jsonify({'error': 'Missing name'}), 400)
 
     new_state = State(**data)
     new_state.save()
@@ -69,7 +69,7 @@ def put_state(state_id):
     try:
         data = request.get_json()
     except Exception:
-        return make_response(jsonify({'error': 'Not a JSON'})), 400
+        return make_response(jsonify({'error': 'Not a JSON'}), 400)
 
     for key, val in data.items():
         ignore_data = ['id', 'created_at', 'updated_at']
