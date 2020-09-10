@@ -22,7 +22,7 @@ def get_states(state_id=None):
             abort(404)
         return jsonify(state.to_dict())
 
-    states_obj = storage.all('State').values()
+    states_obj = storage.all(State).values()
     states = [obj.to_dict() for obj in states_obj]
 
     return jsonify(states)
@@ -39,19 +39,19 @@ def delete_state(state_id):
     storage.delete(state)
     storage.save()
 
-    return jsonify({}), 200
+    return make_response(jsonify({}), 200)
 
 
 @app_views.route('/states', methods=['POST'], **opt_route)
 def create_state():
     """ Creates a State """
-    try:
-        data = request.get_json()
-    except Exception:
-        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    data = request.get_json()
+
+    if not data:
+        return make_response('Not a JSON', 400)
 
     if not data.get('name'):
-        return make_response(jsonify({'error': 'Missing name'}), 400)
+        return make_response('Missing name', 400)
 
     new_state = State(**data)
     new_state.save()
@@ -66,10 +66,10 @@ def put_state(state_id):
     if not state:
         abort(404)
 
-    try:
-        data = request.get_json()
-    except Exception:
-        return make_response(jsonify({'error': 'Not a JSON'}), 400)
+    data = request.get_json()
+
+    if not data:
+        return make_response('Not a JSON', 400)
 
     for key, val in data.items():
         ignore_data = ['id', 'created_at', 'updated_at']
