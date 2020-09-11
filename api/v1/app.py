@@ -7,9 +7,13 @@ from models import storage
 from os import getenv
 
 
+
 app = Flask(__name__)
 app.register_blueprint(app_views)
 app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+cors = CORS(app, resources={r"/*": {"origins": "0.0.0.0"}})
+
+
 
 HBNB_API_HOST = getenv('HBNB_API_HOST', default="0.0.0.0")
 HBNB_API_PORT = getenv('HBNB_API_PORT', default=5000)
